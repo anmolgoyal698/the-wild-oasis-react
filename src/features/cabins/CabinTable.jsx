@@ -33,9 +33,11 @@ const CabinTable = () => {
     data: cabins,
     error,
   } = useQuery({
-    queryKey: ["cabin"],
+    queryKey: ["cabins"],
     queryFn: getCabins,
   });
+
+  console.log("Component Cabin Table called again");
 
   if (isLoading) {
     return <Spinner />;
