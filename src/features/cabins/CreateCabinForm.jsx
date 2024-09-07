@@ -13,7 +13,11 @@ function CreateCabinForm() {
   const { register, handleSubmit, reset, getValues, formState } = useForm();
   const { errors } = formState;
   const queryClient = useQueryClient();
-  const { mutate, isLoading: isCreating } = useMutation({
+  const {
+    mutate,
+    isLoading: isCreating,
+    isPending,
+  } = useMutation({
     mutationFn: createCabin,
     onSuccess: () => {
       toast.success("New cabin successfully created");
@@ -25,9 +29,11 @@ function CreateCabinForm() {
     },
   });
 
+  console.log("Is Creating", isCreating, isPending);
+
   const onSubmit = (data) => {
     console.log(data);
-    mutate(data);
+    mutate({ ...data, image: data.image[0] });
   };
 
   const onError = (errors) => {
@@ -99,11 +105,14 @@ function CreateCabinForm() {
       </FormRow>
 
       <FormRow label="Cabin photo">
-        <FileInput id="image" accept="image/*" />
+        <FileInput
+          id="image"
+          accept="image/*"
+          {...register("image", { required: "This field is required" })}
+        />
       </FormRow>
 
       <FormRow>
-        {/* type is an HTML attribute! */}
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
