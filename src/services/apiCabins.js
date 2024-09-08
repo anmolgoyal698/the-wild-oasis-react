@@ -41,8 +41,12 @@ export const getCabins = async () => {
 };
 
 export const createCabin = async (newCabinData) => {
-  // 1. Upload image to storage bucket
-  const imagePath = await uploadImage(newCabinData.image);
+  let imagePath = newCabinData.image;
+
+  // 1. Upload image to storage bucket if image is not a string url
+  if (typeof imagePath === "object") {
+    imagePath = await uploadImage(newCabinData.image);
+  }
 
   // 1. Create Cabin
   const { data, error } = await supabase
