@@ -6,6 +6,8 @@ import { useDeleteCabin } from "./hooks/useDeleteCabin";
 import { HiPencil, HiTrash } from "react-icons/hi";
 import { HiSquare2Stack } from "react-icons/hi2";
 import { useCreateOrEditCabin } from "./hooks/useCreateOrEditCabin";
+import Modal from "../../ui/Modal";
+import ConfirmDelete from "../../ui/ConfirmDelete";
 
 const TableRow = styled.div`
   display: grid;
@@ -47,7 +49,6 @@ const Discount = styled.div`
 `;
 
 const CabinRow = ({ cabin }) => {
-  const [showForm, setShowForm] = useState(false);
   const { isDeleting, deleteCabin } = useDeleteCabin();
 
   const { isPending: isDuplicating, mutate } = useCreateOrEditCabin({
@@ -95,21 +96,31 @@ const CabinRow = ({ cabin }) => {
           <button onClick={handleDuplicateCabin} disabled={isDuplicating}>
             <HiSquare2Stack />
           </button>
-          <button
-            style={{ marginRight: "5px" }}
-            onClick={() => setShowForm(!showForm)}
-          >
-            <HiPencil />
-          </button>
-          <button
-            onClick={() => deleteCabin({ cabinId, imageName })}
-            disabled={isDeleting}
-          >
-            <HiTrash />
-          </button>
+          <Modal>
+            <Modal.Open opens="edit-cabin">
+              <button style={{ marginRight: "5px" }}>
+                <HiPencil />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="edit-cabin">
+              <CreateCabinForm cabinToEdit={cabin} />
+            </Modal.Window>
+
+            <Modal.Open opens="confirm-delete">
+              <button>
+                <HiTrash />
+              </button>
+            </Modal.Open>
+            <Modal.Window name="confirm-delete">
+              <ConfirmDelete
+                resourceName="cabin"
+                disabled={isDeleting}
+                onConfirm={() => deleteCabin({ cabinId, imageName })}
+              />
+            </Modal.Window>
+          </Modal>
         </div>
       </TableRow>
-      {showForm && <CreateCabinForm cabinToEdit={cabin} />}
     </>
   );
 };

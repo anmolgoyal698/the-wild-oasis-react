@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import FormRow from "../../ui/FormRow";
 import { useCreateOrEditCabin } from "./hooks/useCreateOrEditCabin";
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
   const { id: editId, ...editValues } = cabinToEdit;
   const isEditMode = !!editId;
 
@@ -19,6 +19,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   const { isPending, mutate } = useCreateOrEditCabin({
     editMode: isEditMode,
     reset,
+    callback: onCloseModal,
   });
 
   const onSubmit = (data) => {
@@ -38,7 +39,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   };
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit, onError)}>
+    <Form type="modal" onSubmit={handleSubmit(onSubmit, onError)}>
       <FormRow label="Cabin name" error={errors?.name?.message}>
         <Input
           type="text"
@@ -119,7 +120,11 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       </FormRow>
 
       <FormRow>
-        <Button variation="secondary" type="reset">
+        <Button
+          variation="secondary"
+          type="reset"
+          onClick={() => onCloseModal?.()}
+        >
           Cancel
         </Button>
         <Button disabled={isPending}>
