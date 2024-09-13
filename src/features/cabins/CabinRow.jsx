@@ -3,8 +3,6 @@ import { formatCurrency } from "../../utils/helpers";
 import CreateCabinForm from "./CreateCabinForm";
 import { useDeleteCabin } from "./hooks/useDeleteCabin";
 import { HiPencil, HiTrash } from "react-icons/hi";
-import { HiSquare2Stack } from "react-icons/hi2";
-import { useCreateOrEditCabin } from "./hooks/useCreateOrEditCabin";
 import Modal from "../../ui/Modal";
 import ConfirmDelete from "../../ui/ConfirmDelete";
 import Table from "../../ui/Table";
@@ -46,7 +44,6 @@ const CabinRow = ({ cabin }) => {
     regularPrice,
     discount,
     image,
-    description,
   } = cabin;
 
   const imageName = image?.split("/").at(-1);

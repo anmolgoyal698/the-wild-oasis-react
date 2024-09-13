@@ -3,6 +3,7 @@ import CabinRow from "./CabinRow";
 import { useCabins } from "./hooks/useCabins";
 import Table from "../../ui/Table";
 import { useSearchParams } from "react-router-dom";
+import Empty from "../../ui/Empty";
 
 const CabinTable = () => {
   const { isLoading, cabins } = useCabins();
@@ -10,6 +11,10 @@ const CabinTable = () => {
 
   if (isLoading) {
     return <Spinner />;
+  }
+
+  if (!cabins.length) {
+    return <Empty resource="cabins" />;
   }
 
   //1. FILTER
