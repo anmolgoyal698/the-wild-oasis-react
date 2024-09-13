@@ -39,11 +39,6 @@ const Discount = styled.div`
 const CabinRow = ({ cabin }) => {
   const { isDeleting, deleteCabin } = useDeleteCabin();
 
-  const { isPending: isDuplicating, mutate } = useCreateOrEditCabin({
-    editMode: false,
-    reset: () => {},
-  });
-
   const {
     id: cabinId,
     name,
@@ -55,18 +50,6 @@ const CabinRow = ({ cabin }) => {
   } = cabin;
 
   const imageName = image?.split("/").at(-1);
-
-  const handleDuplicateCabin = () => {
-    const cabinData = {
-      name: `Copy of ${name}`,
-      maxCapacity,
-      regularPrice,
-      discount,
-      image,
-      description,
-    };
-    mutate(cabinData);
-  };
 
   return (
     <>
@@ -81,12 +64,15 @@ const CabinRow = ({ cabin }) => {
           <span>&mdash;</span>
         )}
         <div>
-          <button onClick={handleDuplicateCabin} disabled={isDuplicating}>
-            <HiSquare2Stack />
-          </button>
           <Modal>
             <Modal.Open opens="edit-cabin">
-              <button style={{ marginRight: "5px" }}>
+              <button
+                style={{
+                  marginRight: "5px",
+                  border: "none",
+                  background: "none",
+                }}
+              >
                 <HiPencil />
               </button>
             </Modal.Open>
@@ -95,7 +81,7 @@ const CabinRow = ({ cabin }) => {
             </Modal.Window>
 
             <Modal.Open opens="confirm-delete">
-              <button>
+              <button style={{ border: "none", background: "none" }}>
                 <HiTrash />
               </button>
             </Modal.Open>
