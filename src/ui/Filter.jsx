@@ -35,13 +35,17 @@ const FilterButton = styled.button`
   }
 `;
 
-const Filter = ({ filterField, options }) => {
+const Filter = ({ filterField, options, searchParamsToReset }) => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activeFilter = searchParams.get(filterField) ?? options.at(0).value;
 
   const handleClick = (filterBy) => {
     searchParams.set(filterField, filterBy);
+    searchParamsToReset?.map((param) =>
+      searchParams.set(param.name, param.value)
+    );
+
     setSearchParams(searchParams);
   };
   return (
