@@ -8,6 +8,8 @@ import Pagination from "../../ui/Pagination";
 function BookingTable() {
   const { isLoading, bookings, count } = useBookings();
 
+  console.log("Bookings table component rerendered");
+
   if (isLoading) {
     return <Spinner />;
   }

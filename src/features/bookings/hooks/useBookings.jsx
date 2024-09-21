@@ -21,10 +21,11 @@ export const useBookings = () => {
   const queryClient = useQueryClient();
   const {
     isPending: isLoading,
+    isFetching,
     data: { data: bookings, count } = {},
     error,
   } = useQuery({
-    queryKey: ["bookings", filter, sortBy, page],
+    queryKey: ["bookings", filterValue, sort, page],
     queryFn: () => getBookings(filter, sortBy, page),
   });
 
@@ -32,9 +33,14 @@ export const useBookings = () => {
   const pageCount = Math.ceil(count / PAGE_SIZE);
   if (page < pageCount) {
     queryClient.prefetchQuery({
-      queryKey: ["bookings", filter, sortBy, page + 1],
+      queryKey: ["bookings", filterValue, sort, page + 1],
       queryFn: () => getBookings(filter, sortBy, page + 1),
     });
   }
+
+  if (isFetching) {
+    console.log("Fetching data in the background...");
+  }
+
   return { isLoading, bookings, count, error };
 };

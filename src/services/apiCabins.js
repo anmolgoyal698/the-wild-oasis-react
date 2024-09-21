@@ -29,6 +29,7 @@ const deleteImage = async (imageName) => {
 };
 
 export const getCabins = async () => {
+  console.log("Api request triggered for cabins");
   const { data, error } = await supabase
     .from("cabins")
     .select("*")
