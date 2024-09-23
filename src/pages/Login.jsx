@@ -5,6 +5,7 @@ import LoginForm from "../features/authentication/LoginForm";
 import { useUser } from "../features/authentication/hooks/useUser";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import CabinTable from "../features/cabins/CabinTable";
 
 const LoginLayout = styled.main`
   min-height: 100vh;
