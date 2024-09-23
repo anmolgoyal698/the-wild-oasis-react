@@ -14,6 +14,7 @@ export const useUser = () => {
   return {
     isLoading,
     isFetching,
+    user,
     isAuthenticated: user?.role === "authenticated",
   };
 };
