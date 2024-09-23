@@ -3,7 +3,7 @@ import Button from "../../ui/Button";
 import Form from "../../ui/Form";
 import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
-import { useSignUp } from "./hooks/useSignup";
+import { useSignUp } from "./hooks/useSignUp";
 import Spinner from "../../ui/Spinner";
 
 // Email regex: /\S+@\S+\.\S+/
